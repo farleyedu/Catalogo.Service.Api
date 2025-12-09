@@ -817,38 +817,6 @@ public class ProductSQL
             FETCH NEXT 1 ROWS ONLY";
     }
 
-    public static string GetProductGrupoSimilarList()
-    {
-        return @"SELECT
-                    SML.CODGRPSMRMER
-                    , SML.DESMCDCMCETN AS TituloProdutoPai
-                    --, CASE WHEN SML.DATDST IS NOT NULL THEN 0 ELSE 1 END AS IsAtivo
-                    , CASE WHEN RLC.INDPRDPCP = 0 THEN 0 ELSE 1 END AS IsPrincipal
-                    , ATR.CODATRPRD AS CodigoAtributo
-                    , ATR.DESATRPRD AS DescricaoAtributo
-                    , CASE
-                        WHEN LJA.CODTIPPRD = 3 THEN TRIM(LJA.CODERPLJA) || '-' || LPAD(LJA.CODCLI, 5, '0')
-                        WHEN LJA.CODTIPPRD = 4 THEN TRIM(LJA.CODPRDLJA)
-                    END AS Sku
-                FROM
-                    MRT.RLCGRPSMRPRDCTLSMA RLC
-                INNER JOIN MRT.CADGRPSMRCTLSMA SML ON
-                    SML.CODGRPSMRMER = RLC.CODGRPSMRMER
-                    AND SML.DATDST IS NOT NULL -- Somente grupos ativos
-                INNER JOIN MRT.RLCATRHIRCTLSMA GRPATR ON
-                    GRPATR.CODGRPSMRMER = SML.CODGRPSMRMER
-                INNER JOIN MRT.CADATRCTLSMA ATR ON
-                    ATR.CODATRPRD = GRPATR.CODATRPRD
-                INNER JOIN MRT.CADPRDLJACTLSMA LJA ON
-                    LJA.CODPRD = RLC.CODPRD
-                    AND LJA.CODTIPPRD = RLC.CODTIPPRD
-                    AND LJA.CODCLI = RLC.CODCLI
-                WHERE
-                    RLC.CODPRD = :CODPRD
-                    AND RLC.CODTIPPRD = :CODTIPPRD
-                    AND RLC.CODCLI = :CODCLI";
-    }
-
     /// <summary>
     /// Obtêm dados de mercadorias 1P e 3P DIVINO
     /// </summary>

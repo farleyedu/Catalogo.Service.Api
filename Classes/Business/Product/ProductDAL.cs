@@ -267,22 +267,6 @@ public class ProductDAL : OraAccess
     }
 
     /// <summary>
-    /// Obtêm dados de grupo similar do produto e-Fácil
-    /// </summary>
-    /// <param name="codPrd">Código de produto no catálogo.</param>
-    /// <param name="codTipPrd">Tipo de Cliente.</param>
-    /// <param name="codCli">Código do cliente.</param>
-    /// <returns></returns>
-    public Task<List<ProductGrupoSimilar>> GetProductGrupoSimilarListAsync(long codPrd, int codTipPrd, long codCli)
-    {
-        return Command.UseQuery(ProductSQL.GetProductGrupoSimilarList())
-            .AddParameter("CODPRD", codPrd)
-            .AddParameter("CODTIPPRD", codTipPrd)
-            .AddParameter("CODCLI", codCli)
-            .ExecuteList<ProductGrupoSimilar>();
-    }
-
-    /// <summary>
     /// Obtêm dados de mercadorias 1P e 3P DIVINO
     /// </summary>
     /// <returns></returns>

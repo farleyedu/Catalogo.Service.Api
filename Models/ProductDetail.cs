@@ -230,8 +230,17 @@ public class ProductDetail
     [JsonProperty("tipoProdutoEfacil")]
     public string TipoProdutoEfacilStr => ((char)TipoProdutoEfacil).ToString();
 
+    /// <summary>
+    /// SKU solicitado pelo consumidor (pode ser filho).
+    /// </summary>
+    [JsonProperty("psku")]
+    public string PSKU { get; set; }
+
     [JsonProperty("grupoSimilar")]
-    public ProductDetailGrupoSimilar? GrupoSimilar { get; set; }
+    public bool? HasGrupoSimilar { get; set; }
+
+    [JsonProperty("grupoSimilarDetalhe")]
+    public ProductDetailGrupoSimilar? GrupoSimilarDetalhe { get; set; }
 
     /// <summary>
     /// Imagens do produto.
@@ -262,6 +271,7 @@ public class ProductDetailGrupoSimilarProductEntry
 {
     [JsonProperty("codMer")] public string CodMer { get; set; }
     [JsonProperty("isPrincipal")] public bool IsPrincipal { get; set; }
+    [JsonProperty("valorAtributo")] public string ValorAtributo { get; set; }
 }
 
 /// <summary>

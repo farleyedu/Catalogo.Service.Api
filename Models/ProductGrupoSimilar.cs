@@ -9,4 +9,5 @@ public class ProductGrupoSimilar
     public bool IsPrincipal { get; set; }
     public long CodigoAtributo { get; set; }
     public string DescricaoAtributo { get; set; }
+    public string ValorAtributo { get; set; }
 }

@@ -12,6 +12,7 @@ namespace Catalogo.Service.Api;
 /// </summary>
 public class ProductBLL
 {
+    private readonly GrupoSimilarBLL _grupoSimilarBll = new();
     #region Detalhe Produto
 
     /// <summary>
@@ -26,6 +27,9 @@ public class ProductBLL
     public async Task<ProductDetail> GetProductDetail(string filter, int codOpdTrcEtn, ushort codCnl)
     {
         if (string.IsNullOrEmpty(filter)) return null;
+
+        string requestedSku = filter?.Trim();
+        bool forceLoadImages = false;
 
         ProductDAL dal = new();
         ProductDetail productDetail;
@@ -52,8 +56,7 @@ public class ProductBLL
                     //productDetail.Hierarchy = await dal.GetHierarchyProductB2B3P(managedFilter.CodMer, managedFilter.Seller);
                     // Não é necessário pesquisar duas vezes caso código operação tipo 9 ou 10.
                     codOpdTrcEtn = (int)TipoOperacaoDetalheProduto.Nenhum;
-                    // Caso seller não martins verificar e atribuir imagens. (regra da api antiga)
-                    await SetImagesOnProduct(dal, productDetail, codCnl);
+                    forceLoadImages = true;
                     break;
                 }
             case (int)PlataformasCatalogoCorp.EFacil:
@@ -113,19 +116,27 @@ public class ProductBLL
             default: throw new NotImplementedException($"O código da plataforma \"{codCnl}\" não foi implementado");
         }
 
+        if (productDetail == null) return null;
+
+        productDetail.PSKU = "p" + requestedSku ?? productDetail.PSKU ?? productDetail.CODMER;
+
+        if (codCnl == (int)PlataformasCatalogoCorp.B2B)
+            productDetail = await _grupoSimilarBll.ApplyGrupoSimilarAsync(dal, productDetail, requestedSku, codCnl);
+
         // Atribuindo imagens ao produto.
         int[] tiposOperacoesImagem =
         {
             (int) TipoOperacaoDetalheProduto.App, (int) TipoOperacaoDetalheProduto.PortalCliente,
             (int) TipoOperacaoDetalheProduto.PortalVendas
         };
-        if (tiposOperacoesImagem.Contains(codOpdTrcEtn))
+        if (tiposOperacoesImagem.Contains(codOpdTrcEtn) || forceLoadImages)
             await SetImagesOnProduct(dal, productDetail, codCnl);
 
         // Atributos.
         if (productDetail != null)
         {
             productDetail.Attributes = await dal.GetProductAttributes(productDetail.CODPRD, codCnl);
+            RemoveDefinitionAttribute(productDetail);
 
             // Atributo extra de diretoria do e-Fácil
             if (codCnl == (int)PlataformasCatalogoCorp.EFacil && productDetail.CODDRT.GetValueOrDefault() != 0
@@ -143,8 +154,8 @@ public class ProductBLL
         }
 
         return productDetail;
-    }
-
+    }    
+    
     /// <summary>
     /// Atribui as imagens no produto.
     /// </summary>
@@ -199,6 +210,15 @@ public class ProductBLL
                 img.Index = index++;
             });
         }
+    }
+
+
+    private static void RemoveDefinitionAttribute(ProductDetail productDetail)
+    {
+        long? definitionAttribute = productDetail?.GrupoSimilarDetalhe?.CodigoAtributo;
+        if (!definitionAttribute.HasValue || productDetail?.Attributes == null) return;
+
+        productDetail.Attributes.RemoveAll(attribute => attribute.CODATRPRD == definitionAttribute.Value);
     }
 
 
