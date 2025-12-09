@@ -1,0 +1,45 @@
+############################################################################
+# Seção trigger indica o disparo da esteira e em que branch será utilizada #
+############################################################################
+trigger:
+  - develop
+  - main
+
+
+###########################################################
+# Seção resources: informações do repositorio de Execução #
+###########################################################
+
+resources:
+  repositories:
+    - repository: sharedlib
+      type: git
+      name: 'Martins.DevSecOps/ScriptsPipelines'
+      ref: master
+
+###################################################
+# Seção extends : - Chama o pipeline + parâmetros #
+###################################################
+stages:
+  - template: DotNetCore/DotNetCore-CI.yml@sharedlib
+    parameters:
+      ProjectPath: '**/*.csproj' # Origem do build
+      ProjectTestPath: '**/*[Tt]ests/*.csproj' # Origem do projeto de Test
+      ArtifactName: 'drop' # Nome do artefato a ser gerado
+      SonarConnection: 'SonarQube Oficial-Vendas Catalogo Corporativo' # Nome da Service Connection do Sonaqube
+      SonarProjectKey: 'Catalogo.Service.Api' # ProjectKey do projeto no Sonarqube
+      SonarProjectName: 'Catalogo.Service.Api' # ProjectName do projeto no Sonarqube
+      BuildConfiguration: 'Release' # Configuração para realização do build (Debug / Release)
+      BuildPlatform: 'x64' # Plataforma da compilação da aplicação
+      BuildArgs: '--configuration Release --output $(build.artifactstagingdirectory)/Catalogo.Service.Api' # Argumentos para realização do build
+      PublishArgs: '--configuration Release --output $(build.artifactstagingdirectory)/Catalogo.Service.Api' # Argumentos para realização da publicação
+      System.Debug: 'true' # Exibindo logs mais detalhados da execução 
+      System.TeamProject: 'VendasCatalogoCorporativo' # Nome do projeto
+      SnykConnection: 'Snyk-Martins-SegurancaInformacao-Vendas Catalogo Corporativo' # Nome da Service Connection do Snyk quando for utilizado
+      SnykFileName: 'Catalogo.Service.Api.sln' # Arquivo para inicio da análise do Snyk quando for utilizado
+      SnykTestDirectory: '$(System.DefaultWorkingDirectory)' # Diretório de análise do Snyk quando for utilizado
+      DependencyCheckProjectName: 'Catalogo.Service.Api' # Nome do projeto para análise do dependency check
+      DependencyCheckPath: '$(System.DefaultWorkingDirectory)' # Caminho para análise do dependency check
+      DependencyCheckTestTitle: 'Catalogo.Service.ApiE011' # Nome do teste para análise do dependency check
+      
+

@@ -1,0 +1,487 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Catalogo Service API",
+    "description": "Serviço de unificação e integração de dados do Catalogo de Produtos Martins.",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Preference/GetPreference": {
+      "get": {
+        "tags": [
+          "Preference"
+        ],
+        "summary": "Obtem as preferências.",
+        "parameters": [
+          {
+            "name": "activityCode",
+            "in": "query",
+            "description": "Código de atividade do cliente. (Apenas para ver os que estão disponíveis para atividade)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "clientCode",
+            "in": "query",
+            "description": "Código do cliente. (Apenas para ver os que já foram selecionados)",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "channelCode",
+            "in": "query",
+            "description": "Código do canal. (plataforma)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Preference/SetClientPreference": {
+      "post": {
+        "tags": [
+          "Preference"
+        ],
+        "summary": "Marca a opção selecionada pelo cliente.",
+        "requestBody": {
+          "description": "Preferências do cliente.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPreference"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPreference"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPreference"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPreference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Preference/UnsetClientPreference": {
+      "put": {
+        "tags": [
+          "Preference"
+        ],
+        "summary": "Desmarca a opção selecionada pelo cliente.",
+        "requestBody": {
+          "description": "Preferência do cliente.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPreference"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPreference"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPreference"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientPreference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Preference/SetModalState": {
+      "post": {
+        "tags": [
+          "Preference"
+        ],
+        "summary": "Muda o estado do modal para o cliente.",
+        "requestBody": {
+          "description": "Estado do modal.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientModalState"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientModalState"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientModalState"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientModalState"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Mercadoria/detalhe": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Obtem os detalhes do produto.",
+        "parameters": [
+          {
+            "name": "codMer",
+            "in": "query",
+            "description": "Código da mercadoria.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codOpdTrcEtn",
+            "in": "query",
+            "description": "Tipo da operação.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "channelCode",
+            "in": "query",
+            "description": "Código do canal. (plataforma)",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Mercadoria/SEO": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Obtem as informações do SEO.",
+        "parameters": [
+          {
+            "name": "codMer",
+            "in": "query",
+            "description": "Código da mercadoria. (Código único ou Seller + Código)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "channelCode",
+            "in": "query",
+            "description": "Código do canal. (plataforma)",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Mercadoria/hierarquia": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Obtem a hierarquia do produto.",
+        "parameters": [
+          {
+            "name": "codMer",
+            "in": "query",
+            "description": "Código da mercadoria. (Código único ou Seller + Código)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "channelCode",
+            "in": "query",
+            "description": "Código do canal. (plataforma)",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Mercadoria/listaImagem": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Obtem a lista de imagens de produtos.",
+        "parameters": [
+          {
+            "name": "codSkus",
+            "in": "query",
+            "description": "Lista de códigos SKU de mercadorias.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "channelCode",
+            "in": "query",
+            "description": "Código do canal. (plataforma)",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Mercadoria/GetMercadoria1P_3P": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Obtêm dados de mercadorias 1P e 3P DIVINO",
+        "parameters": [
+          {
+            "name": "numInicioItem",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "numFimItem",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Mercadoria/GetMercadoriaFiliais1P_3P": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Obtêm dados de mercadorias E FILIAIS 1P e 3P DIVINO",
+        "parameters": [
+          {
+            "name": "codigoMercadoria",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Mercadoria/protocolar": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Protocola o produto com os dados informados.",
+        "requestBody": {
+          "description": "Dados do protocolo produto.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Protocolo"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Protocolo"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Protocolo"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Protocolo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ClientModalState": {
+        "type": "object",
+        "properties": {
+          "clientCode": {
+            "type": "integer",
+            "description": "Código do cliente.",
+            "format": "int64"
+          },
+          "openModal": {
+            "type": "boolean",
+            "description": "Status aberto/fechado."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modal App."
+      },
+      "ClientOption": {
+        "type": "object",
+        "properties": {
+          "relationCode": {
+            "type": "integer",
+            "description": "Código da relação.",
+            "format": "int64"
+          },
+          "channelCode": {
+            "type": "integer",
+            "description": "Código do canal. (plataforma)",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Opção do cliente."
+      },
+      "ClientPreference": {
+        "type": "object",
+        "properties": {
+          "clientCode": {
+            "type": "integer",
+            "description": "Código do cliente.",
+            "format": "int64"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientOption"
+            },
+            "description": "Opções do cliente.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Preferência do cliente."
+      },
+      "Protocolo": {
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "Sku do produto.",
+            "nullable": true
+          },
+          "ean": {
+            "type": "integer",
+            "description": "Código de barras do produto.",
+            "format": "int64"
+          },
+          "data": {
+            "type": "string",
+            "description": "Data de cadastramento.",
+            "format": "date-time"
+          },
+          "hash": {
+            "type": "string",
+            "description": "Hash único para controle customizado. (opcional)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Modelo protocolo."
+      }
+    }
+  }
+}
