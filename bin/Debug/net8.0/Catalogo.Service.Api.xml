@@ -180,7 +180,7 @@
             Leon Denis @ByteOn
             Douglas Antunes @ByteOn - Incluindo variação de plataforma
         </member>
-        <member name="M:Catalogo.Service.Api.ProductBLL.ApplyEfacilGrupoSimilarAsync(Catalogo.Service.Api.ProductDAL,Catalogo.Service.Api.ProductDetail,Catalogo.Service.Api.EfacilSkuParser)">
+        <member name="M:Catalogo.Service.Api.ProductBLL.ApplyGrupoSimilarAsync(Catalogo.Service.Api.ProductDAL,Catalogo.Service.Api.ProductDetail,System.String,System.UInt16)">
             <summary>
             Obtêm dados de mercadorias 1P e 3P DIVINO
             </summary>
@@ -1664,6 +1664,11 @@
         <member name="P:Catalogo.Service.Api.ProductDetail.TipoProdutoEfacilStr">
             <summary>
             Indicador do tipo de produto e-Fácil
+            </summary>
+        </member>
+        <member name="P:Catalogo.Service.Api.ProductDetail.PSKU">
+            <summary>
+            SKU solicitado pelo consumidor (pode ser filho).
             </summary>
         </member>
         <member name="P:Catalogo.Service.Api.ProductDetail.ProductImages">
