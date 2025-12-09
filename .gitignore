@@ -1,6 +1,6 @@
 # Build results
-/bin/
-/obj/
+bin/
+obj/
 
 # Visual Studio / VS Code settings
 .vs/
@@ -33,4 +33,3 @@ _ReSharper*/
 *.jfm
 .idea/
 .DS_Store
-

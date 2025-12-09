@@ -4,6 +4,26 @@
         <name>Catalogo.Service.Api</name>
     </assembly>
     <members>
+        <member name="T:Catalogo.Service.Api.GrupoSimilarDAL">
+            <summary>
+            Camada de acesso para recursos de grupo similar.
+            </summary>
+        </member>
+        <member name="M:Catalogo.Service.Api.GrupoSimilarDAL.GetGrupoSimilarProdutoAtributoAsync(System.Int64)">
+            <summary>
+            Obtém estrutura de grupo similar + atributos a partir do código do produto do catálogo.
+            </summary>
+        </member>
+        <member name="T:Catalogo.Service.Api.GrupoSimilarSQL">
+            <summary>
+            Consultas relacionadas a grupo similar.
+            </summary>
+        </member>
+        <member name="M:Catalogo.Service.Api.GrupoSimilarSQL.GetGrupoSimilarProdutoAtributo">
+            <summary>
+            Consulta os dados de grupo similar/atributos partindo do código do produto.
+            </summary>
+        </member>
         <member name="T:Catalogo.Service.Api.PreferenceBLL">
             <summary>
             Camada de Negócio - Preferência.
@@ -383,15 +403,6 @@
             <param name="codCli">Código do cliente.</param>
             <param name="codMer">Código da Mercadoria</param>
             <returns>Imagem principal do produto.</returns>
-        </member>
-        <member name="M:Catalogo.Service.Api.ProductDAL.GetProductGrupoSimilarListAsync(System.Int64,System.Int32,System.Int64)">
-            <summary>
-            Obtêm dados de grupo similar do produto e-Fácil
-            </summary>
-            <param name="codPrd">Código de produto no catálogo.</param>
-            <param name="codTipPrd">Tipo de Cliente.</param>
-            <param name="codCli">Código do cliente.</param>
-            <returns></returns>
         </member>
         <member name="M:Catalogo.Service.Api.ProductDAL.GetMercadoria1P_3P(System.Int32,System.Int32)">
             <summary>
@@ -1145,6 +1156,11 @@
         <member name="P:Catalogo.Service.Api.Subcategory.DESSUBCATEGORIA">
             <summary>
             Descrição Subcategoria. (Martins)
+            </summary>
+        </member>
+        <member name="T:Catalogo.Service.Api.GrupoSimilarProdutoAtributo">
+            <summary>
+            Estrutura auxiliar para leitura do SQL de grupo similar.
             </summary>
         </member>
         <member name="T:Catalogo.Service.Api.Hierarchy">
