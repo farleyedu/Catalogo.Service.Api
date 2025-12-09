@@ -180,12 +180,10 @@
             Leon Denis @ByteOn
             Douglas Antunes @ByteOn - Incluindo variação de plataforma
         </member>
-        <member name="M:Catalogo.Service.Api.ProductBLL.ApplyGrupoSimilarAsync(Catalogo.Service.Api.ProductDAL,Catalogo.Service.Api.ProductDetail,System.String,System.UInt16)">
+        <member name="M:Catalogo.Service.Api.ProductBLL.GetMercadoria1P_3P(System.Int32,System.Int32)">
             <summary>
             Obtêm dados de mercadorias 1P e 3P DIVINO
             </summary>
-        </member>
-        <member name="M:Catalogo.Service.Api.ProductBLL.GetMercadoria1P_3P(System.Int32,System.Int32)">
             <returns></returns>
         </member>
         <member name="M:Catalogo.Service.Api.ProductBLL.GetMercadoriaFiliais1P_3P(System.String)">
